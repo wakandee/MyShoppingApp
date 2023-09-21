@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">MyShoppingApp</string>
+    <string name="testbutton">My Button</string>
+    <string name="default_money_value">Money: $0.00</string>
+    <string name="hint_enter_amount">Enter amount</string>
+    <string name="label_add_money">Add Money</string>
+    <string name="label_reset">Reset</string>
+    <string name="label_logout">Logout</string>
+    <string name="add_money_title_text">Add Money</string>
+    <string name="amount_label_text">Enter Amount:</string>
+    <string name="amount_input_hint">Enter amount here</string>
+    <string name="confirm_button_text">Confirm</string>
+    <string name="cancel_button_text">Cancel</string>
+    <string name="user_name">Name</string>
+    <string name="search">Item name ...</string>
+
+</resources>

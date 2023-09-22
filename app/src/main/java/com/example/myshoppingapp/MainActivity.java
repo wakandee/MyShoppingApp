@@ -7,10 +7,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvMoney;
     private Button btnAddMoney, btnReset, btn_logout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,16 @@ public class MainActivity extends AppCompatActivity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         Cart.InitCart(preferences);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_sort_by);
+
+// Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.planets_array, android.R.layout.simple_spinner_item);
+// Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+// Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
 
         confirmPurchaseDialog = new ConfirmPurchaseDialog(this, this);  // Pass 'this' twice
 
@@ -100,7 +114,51 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
             }
         });
+
+        // Set a default selection for the Spinner
+        spinner.setSelection(0, false); // Select the first item ("Sort By") without triggering the listener
+
+        // Add an item selection listener to the Spinner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                // Get the selected item
+                String selectedItem = adapterView.getItemAtPosition(position).toString();
+
+                // Determine the sorting option based on the selected item
+                ShopDataManager.SortOption sortOption;
+                if (selectedItem.equals("Name")) {
+                    sortOption = ShopDataManager.SortOption.NAME;
+                } else if (selectedItem.equals("Cost")) {
+                    sortOption = ShopDataManager.SortOption.COST;
+                } else {
+                    sortOption = ShopDataManager.SortOption.ORIGINAL;
+                }
+
+                // Set the sorting option in ShopDataManager
+                ShopDataManager.setSortOption(sortOption);
+
+                // Refresh the item list with the selected sorting option
+                refreshItemList();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // Handle this method if needed
+            }
+        });
+
     }
+
+    // Add a method to refresh the item list based on the current sorting option
+    private void refreshItemList() {
+        // Sort the data based on the current sorting option
+        ShopDataManager.sortData();
+
+        ShopDataManager.InitShopItems(etSearch.getText().toString(), findViewById(R.id.itemListLayout), MainActivity.this, confirmPurchaseDialog);
+        //Toast.makeText(MainActivity.this, "Refresh", Toast.LENGTH_SHORT).show();
+    }
+
 
     public void updateMoneyDisplay() {
         float moneyInDollars = Cart.money / 100.0f;

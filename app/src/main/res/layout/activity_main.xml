@@ -91,23 +91,35 @@
                 android:text="@string/label_reset" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/etSearch"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/lavender_border"
-            android:drawableLeft="@drawable/baseline_screen_search_desktop_24"
-            android:drawablePadding="8dp"
-            android:hint="Search"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:minHeight="50dp"
-            android:padding="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/etSearch"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/lavender_border"
+                android:drawableLeft="@drawable/baseline_screen_search_desktop_24"
+                android:drawablePadding="8dp"
+                android:hint="Search"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:minHeight="50dp"
+                android:padding="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <Spinner
+                android:id="@+id/spinner_sort_by"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:minHeight="50dp"
+                android:padding="6dp"
+                android:layout_height="wrap_content" />
 
+        </LinearLayout>
 
     </LinearLayout>
 

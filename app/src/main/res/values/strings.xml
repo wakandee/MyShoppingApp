@@ -13,5 +13,12 @@
     <string name="cancel_button_text">Cancel</string>
     <string name="user_name">Name</string>
     <string name="search">Item name ...</string>
+    <string-array name="planets_array">
+        <item>Sort By</item>
+        <item>Name</item>
+        <item>Cost</item>
+
+    </string-array>
+
 
 </resources>

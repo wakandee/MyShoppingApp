@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class ShopDataManager {
@@ -34,6 +36,35 @@ public class ShopDataManager {
                     new ShopData("Yak", R.drawable.yak, "Yakity Yak Yak.", 15)
             )
     );
+
+    // Enumeration for sorting options
+    public enum SortOption {
+        ORIGINAL,
+        NAME,
+        COST
+    }
+
+    // Variable to store the current sorting option
+    private static SortOption currentSortOption = SortOption.ORIGINAL;
+
+    public static void setSortOption(SortOption option) {
+        currentSortOption = option;
+    }
+
+    // Sorts the data ArrayList based on the current sorting option
+    public static void sortData() {
+        switch (currentSortOption) {
+            case ORIGINAL:
+                // Do nothing, keep the original order
+                break;
+            case NAME:
+                Collections.sort(data, Comparator.comparing(item -> item.name.toLowerCase()));
+                break;
+            case COST:
+                Collections.sort(data, Comparator.comparingInt(item -> item.cost));
+                break;
+        }
+    }
 
 
 

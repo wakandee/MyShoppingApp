@@ -13,6 +13,7 @@
     <string name="cancel_button_text">Cancel</string>
     <string name="user_name">Name</string>
     <string name="search">Item name ...</string>
+    <string name="label_history">History</string>
     <string-array name="planets_array">
         <item>Sort By</item>
         <item>Name</item>

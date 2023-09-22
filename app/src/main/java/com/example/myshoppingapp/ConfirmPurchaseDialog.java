@@ -14,6 +14,13 @@ import android.view.Window;
 
 import androidx.annotation.NonNull;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class ConfirmPurchaseDialog extends Dialog {
 
     private MainActivity mainActivity;
@@ -50,6 +57,12 @@ public class ConfirmPurchaseDialog extends Dialog {
                     mainActivity.updateMoneyDisplay();
                     ShopDataManager.data.get(itemIndex).purchased = true;
 
+                    // Log the transaction to a file
+                    String transactionContent = "Purchased " + ShopDataManager.data.get(itemIndex).name +
+                            " for $" + ShopDataManager.data.get(itemIndex).cost + " at " + getCurrentTimestamp();
+
+                    writeToLogFile(transactionContent);
+
                     for (int i = 0; i < parentLayout.getChildCount(); ++i) {
                         View v = parentLayout.getChildAt(i);
                         TextView hidden = v.findViewById(R.id.hiddenId);
@@ -80,4 +93,24 @@ public class ConfirmPurchaseDialog extends Dialog {
         ImageButton image = findViewById(R.id.itemImage);
         image.setImageResource(ShopDataManager.data.get(itemIndex).imageResource);
     }
+
+    // Helper method to write content to a log file
+    private void writeToLogFile(String content) {
+        try {
+            File logFile = new File(getContext().getFilesDir(), "transaction_log.txt");
+            FileWriter writer = new FileWriter(logFile, true); // true for append mode
+            writer.append(content).append("\n");
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Helper method to get the current timestamp
+    private String getCurrentTimestamp() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());
+    }
+
+
 }

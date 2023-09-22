@@ -5,22 +5,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     public ConfirmPurchaseDialog confirmPurchaseDialog = null;
     private EditText etSearch;
     private TextView tvMoney;
-    private Button btnAddMoney, btnReset, btn_logout;
+    private Button btnAddMoney, btnReset, btn_logout,btn_view_history;
 
 
     @Override
@@ -43,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner_sort_by);
 
-// Create an ArrayAdapter using the string array and a default spinner layout
+        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.planets_array, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
+        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
+
+        // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
         confirmPurchaseDialog = new ConfirmPurchaseDialog(this, this);  // Pass 'this' twice
@@ -58,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         tvMoney = findViewById(R.id.tvMoney);
         btnAddMoney = findViewById(R.id.btnAddMoney);
         btnReset = findViewById(R.id.btnReset);
+        btn_view_history = findViewById(R.id.btn_view_history);
 
         btn_logout = findViewById(R.id.btn_logout);
 
@@ -83,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
                 Cart.ResetMoney();
                 ShopDataManager.InitShopItems("",findViewById(R.id.itemListLayout), MainActivity.this, confirmPurchaseDialog);
                 updateMoneyDisplay();
+            }
+        });
+
+        btn_view_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // This button will tae one to the view transactions page
+                Intent intent  = new Intent(getApplicationContext(), view_transactions.class);
+                startActivity(intent);
             }
         });
 

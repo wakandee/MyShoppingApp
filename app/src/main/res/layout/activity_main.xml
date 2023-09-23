@@ -77,14 +77,12 @@
                 android:layout_marginBottom="16dp"
                 android:text="@string/label_add_money" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="50dp" />
+
 
             <!-- Reset Button -->
             <Button
                 android:id="@+id/btnReset"
+                android:layout_marginLeft="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_reset" />
@@ -93,7 +91,7 @@
                 android:id="@+id/btn_view_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="6dp"
                 android:text="@string/label_history" />
         </LinearLayout>
 

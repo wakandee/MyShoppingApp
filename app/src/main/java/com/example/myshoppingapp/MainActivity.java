@@ -16,6 +16,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -80,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
                 Cart.ResetMoney();
                 ShopDataManager.InitShopItems("",findViewById(R.id.itemListLayout), MainActivity.this, confirmPurchaseDialog);
                 updateMoneyDisplay();
+                // Get the path to the log file
+                File logFile = new File(getApplicationContext().getFilesDir(), "transaction_log.txt");
+
+                // Call the function to clear the file's content
+                clearFileContent(logFile);
+
+
             }
         });
 
@@ -155,6 +165,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    private void clearFileContent(File file) {
+        try {
+            // Open the file in write mode, which clears existing content
+            FileWriter fileWriter = new FileWriter(file, false);
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Add a method to refresh the item list based on the current sorting option
     private void refreshItemList() {
